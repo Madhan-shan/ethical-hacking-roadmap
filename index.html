@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethical Hacking — Complete Topic Map & Resource Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0c0f;
+  --surface: #111418;
+  --surface2: #181c22;
+  --surface3: #1e2330;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #e8eaed;
+  --muted: #7a8394;
+  --hint: #3d4455;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Syne', sans-serif;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --c-foundation: #378ADD;
+  --c-lifecycle: #7F77DD;
+  --c-domain: #D85A30;
+  --c-hardware: #EF9F27;
+  --c-pro: #1D9E75;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--hint); border-radius: 3px; }
+
+/* ── Header ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,12,15,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 54px;
+}
+.logo { font-family: var(--mono); font-size: 13px; color: var(--c-foundation); letter-spacing: 0.04em; }
+.logo span { color: var(--muted); }
+.header-pills { display: flex; gap: 8px; }
+.header-pill {
+  font-family: var(--mono); font-size: 10px; padding: 3px 10px;
+  border-radius: 20px; border: 1px solid var(--border2);
+  color: var(--muted); cursor: pointer; transition: color .15s, border-color .15s;
+  background: none;
+}
+.header-pill:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+
+/* ── Hero ── */
+.hero { max-width: 960px; margin: 0 auto; padding: 4rem 2rem 2.5rem; }
+.hero-tag {
+  font-family: var(--mono); font-size: 11px; color: var(--c-foundation);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem;
+}
+.hero-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--c-foundation); }
+h1 { font-size: clamp(26px, 4.5vw, 46px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem; }
+h1 em { font-style: normal; color: var(--c-foundation); }
+.hero-desc { font-size: 15px; color: var(--muted); max-width: 580px; line-height: 1.75; margin-bottom: 2rem; }
+
+/* ── Stats bar ── */
+.stats-bar {
+  display: flex; gap: 1px; margin-bottom: 2.5rem;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; background: var(--border);
+}
+.stat-block {
+  flex: 1; background: var(--surface); padding: 14px 18px;
+  text-align: center; min-width: 80px;
+}
+.stat-block .num { font-family: var(--mono); font-size: 22px; font-weight: 500; }
+.stat-block .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.stat-block.accent .num { color: var(--c-foundation); }
+
+/* ── Filter bar ── */
+.filters-section { max-width: 960px; margin: 0 auto; padding: 0 2rem 1.5rem; }
+.filter-label { font-family: var(--mono); font-size: 10px; color: var(--hint); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; }
+.filter-row { display: flex; gap: 7px; flex-wrap: wrap; }
+.filter-btn {
+  font-family: var(--sans); font-size: 12px; padding: 6px 16px;
+  border-radius: 20px; border: 1px solid var(--border2);
+  background: var(--surface); color: var(--muted);
+  cursor: pointer; transition: all .15s;
+}
+.filter-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+.filter-btn.on { color: #0a0c0f; border-color: transparent; font-weight: 500; }
+
+/* ── Legend ── */
+.legend-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.leg-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+.leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Link type legend ── */
+.type-legend { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.75rem; }
+.tl-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+.tl-icon { width: 20px; height: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; font-weight: 500; flex-shrink: 0; }
+
+/* ── Grid ── */
+.grid-section { max-width: 960px; margin: 0 auto; padding: 0 2rem 1rem; }
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+.pillar-col { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── Category cards ── */
+.cat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden; cursor: pointer;
+  transition: border-color .15s, transform .12s;
+}
+.cat-card:hover { transform: translateY(-2px); border-color: var(--border2); }
+.cat-card.active { border-width: 1.5px; }
+.cat-head { padding: 13px 15px 10px; }
+.cat-label { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; }
+.cat-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 3px; }
+.cat-meta { font-family: var(--mono); font-size: 10px; color: var(--hint); }
+.cat-chips { padding: 0 15px 12px; display: flex; flex-wrap: wrap; gap: 5px; }
+.chip {
+  font-size: 10px; padding: 2px 8px; border-radius: 20px;
+  border: 1px solid var(--border2); color: var(--muted);
+  background: transparent;
+}
+
+/* ── Detail panel ── */
+.detail-section { max-width: 960px; margin: 0 auto; padding: 0 2rem 4rem; }
+.detail-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: none;
+}
+.detail-panel.visible { display: block; }
+.det-header { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 12px; }
+.det-title { font-size: 18px; font-weight: 700; color: var(--text); }
+.det-badge { font-family: var(--mono); font-size: 10px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+.det-desc {
+  font-size: 13px; color: var(--muted); line-height: 1.75;
+  margin-bottom: 20px; padding-left: 14px;
+  border-left: 2px solid var(--hint);
+}
+.sec-label {
+  font-family: var(--mono); font-size: 10px; color: var(--hint);
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 9px;
+}
+.concepts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; margin-bottom: 20px; }
+.concept-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 13px;
+}
+.concept-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.concept-note { font-size: 11px; color: var(--muted); line-height: 1.45; }
+
+/* ── Resource links ── */
+.links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; margin-bottom: 20px; }
+.link-card {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 12px;
+  text-decoration: none; cursor: pointer;
+  transition: border-color .13s, background .13s;
+}
+.link-card:hover { border-color: var(--border2); background: var(--surface3); }
+.link-icon {
+  width: 30px; height: 30px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  flex-shrink: 0;
+}
+.link-icon.yt  { background: rgba(255,0,0,0.12); color: #ff4444; }
+.link-icon.web { background: rgba(55,138,221,0.15); color: #378ADD; }
+.link-icon.course { background: rgba(29,158,117,0.15); color: #1D9E75; }
+.link-icon.tool { background: rgba(127,119,221,0.15); color: #7F77DD; }
+.link-icon.book { background: rgba(239,159,39,0.15); color: #EF9F27; }
+.link-text { min-width: 0; }
+.link-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.link-type { font-size: 10px; color: var(--hint); margin-top: 1px; }
+
+/* ── CTA buttons ── */
+.cta-row { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 4px; }
+.cta-btn {
+  font-family: var(--sans); font-size: 13px; padding: 8px 18px;
+  border-radius: var(--radius); border: 1px solid var(--border2);
+  background: var(--surface2); color: var(--text);
+  cursor: pointer; transition: background .13s, border-color .13s;
+  text-decoration: none; display: inline-block;
+}
+.cta-btn:hover { background: var(--surface3); border-color: rgba(255,255,255,0.2); }
+.cta-btn.primary { background: rgba(55,138,221,0.12); border-color: rgba(55,138,221,0.3); color: #378ADD; }
+.cta-btn.primary:hover { background: rgba(55,138,221,0.2); }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border); padding: 2rem;
+  text-align: center; max-width: 960px; margin: 0 auto;
+  font-family: var(--mono); font-size: 11px; color: var(--hint);
+}
+footer a { color: var(--c-foundation); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media(max-width:700px){
+  header { padding: 0 1rem; }
+  .header-pills { display: none; }
+  .hero, .filters-section, .grid-section, .detail-section { padding-left: 1rem; padding-right: 1rem; }
+  .hero { padding-top: 2rem; }
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .stats-bar { display: grid; grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:480px){
+  .pillars { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">./ethical<span>_</span>hacking<span> —</span> topic map</div>
+  <div class="header-pills">
+    <button class="header-pill" onclick="scrollToSection('filters-section')">Browse topics</button>
+    <button class="header-pill" onclick="scrollToSection('detail-section')">Resources</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">complete resource guide</div>
+  <h1>Ethical Hacking<br><em>Topic Map</em></h1>
+  <p class="hero-desc">Every major topic in ethical hacking, organised into five categories — with direct links to the best YouTube channels, free courses, tools, and documentation for each one. Click any card to explore.</p>
+  <div class="stats-bar">
+    <div class="stat-block accent"><div class="num">22</div><div class="lbl">topic areas</div></div>
+    <div class="stat-block"><div class="num">5</div><div class="lbl">categories</div></div>
+    <div class="stat-block"><div class="num">150+</div><div class="lbl">curated links</div></div>
+    <div class="stat-block"><div class="num">free</div><div class="lbl">always</div></div>
+  </div>
+</section>
+
+<section class="filters-section" id="filters-section">
+  <div class="legend-row">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-foundation)"></div>Foundations</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-lifecycle)"></div>Attack lifecycle</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-domain)"></div>Target domains</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-hardware)"></div>Hardware hacking</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-pro)"></div>Professional skills</div>
+  </div>
+  <div class="type-legend">
+    <div class="tl-item"><div class="tl-icon yt">YT</div>YouTube</div>
+    <div class="tl-item"><div class="tl-icon web">W</div>Website</div>
+    <div class="tl-item"><div class="tl-icon course">C</div>Course</div>
+    <div class="tl-item"><div class="tl-icon tool">T</div>Tool / lab</div>
+    <div class="tl-item"><div class="tl-icon book">B</div>Docs / book</div>
+  </div>
+  <div class="filter-label">Filter by category</div>
+  <div class="filter-row" id="filter-row"></div>
+</section>
+
+<section class="grid-section" id="grid-section">
+  <div class="pillars" id="pillars"></div>
+</section>
+
+<section class="detail-section" id="detail-section">
+  <div class="detail-panel" id="detail-panel"></div>
+</section>
+
+<footer>
+  <p>Ethical hacking resource map &nbsp;·&nbsp; <a href="https://tryhackme.com" target="_blank" rel="noopener">TryHackMe</a> &nbsp;·&nbsp; <a href="https://hackthebox.com" target="_blank" rel="noopener">HackTheBox</a> &nbsp;·&nbsp; <a href="https://portswigger.net/web-security" target="_blank" rel="noopener">PortSwigger</a> &nbsp;·&nbsp; <a href="https://book.hacktricks.xyz" target="_blank" rel="noopener">HackTricks</a></p>
+</footer>
+
+<script>
+const TYPE_META = {
+  foundation: { label: 'Foundations',        color: '#378ADD', bg: 'rgba(55,138,221,0.08)'  },
+  lifecycle:  { label: 'Attack lifecycle',   color: '#7F77DD', bg: 'rgba(127,119,221,0.08)' },
+  domain:     { label: 'Target domains',     color: '#D85A30', bg: 'rgba(216,90,48,0.08)'   },
+  hardware:   { label: 'Hardware hacking',   color: '#EF9F27', bg: 'rgba(239,159,39,0.08)'  },
+  pro:        { label: 'Professional skills', color: '#1D9E75', bg: 'rgba(29,158,117,0.08)' },
+};
+
+const ICON_LABELS = { yt:'YouTube', web:'Website', course:'Course platform', tool:'Tool / lab', book:'Docs / book' };
+
+const cats = [
+  { id:'c1', type:'foundation', name:'Networking & protocols',
+    desc:'The bedrock of everything. Every exploit travels through network layers, and every vulnerability lives in a protocol implementation. Master this before touching anything else.',
+    topics:['TCP/IP stack','OSI model','DNS internals','HTTP/S','Subnetting & CIDR','ARP & routing','Common ports','Wireshark analysis'],
+    items:[
+      {n:'TCP/IP & OSI model',  d:'How data moves layer by layer — from raw bits on the wire to your browser tab'},
+      {n:'DNS',                 d:'Zone transfers, subdomain brute-force, all record types — recon goldmine'},
+      {n:'HTTP/S',              d:'Headers, methods, status codes, cookies, sessions — the protocol you attack most'},
+      {n:'Packet analysis',     d:'Wireshark filters, TCP stream following, protocol decoding in real captures'},
+      {n:'Subnetting',          d:'CIDR notation, broadcast domains, host range calculation — needed for lab setup'},
+      {n:'ARP & routing',       d:'Foundation for MITM attacks, network pivoting, and traffic interception'},
+    ],
+    links:[
+      {n:'Professor Messer (CompTIA Net+)',  t:'yt',     u:'https://www.youtube.com/@professormesser',             d:'Free full CompTIA courses'},
+      {n:'NetworkChuck',                     t:'yt',     u:'https://www.youtube.com/@NetworkChuck',                d:'Networking made fun'},
+      {n:'David Bombal',                     t:'yt',     u:'https://www.youtube.com/@davidbombal',                d:'Networking + hacking'},
+      {n:'Practical Networking',             t:'yt',     u:'https://www.youtube.com/@PracticalNetworking',         d:'Deep networking tutorials'},
+      {n:'TryHackMe Pre-Security path',      t:'course', u:'https://tryhackme.com/path/outline/presecurity',       d:'Free guided learning path'},
+      {n:'Wireshark official docs',          t:'book',   u:'https://www.wireshark.org/docs/',                      d:'Official Wireshark documentation'},
+      {n:'Cisco Packet Tracer',              t:'tool',   u:'https://www.netacad.com/cisco-packet-tracer',          d:'Free network simulator'},
+      {n:'Subnetting Practice',              t:'web',    u:'https://subnettingpractice.com/',                      d:'Interactive subnetting exercises'},
+    ]
+  },
+  { id:'c2', type:'foundation', name:'Operating systems',
+    desc:'Linux is your attack platform, Windows is your primary target. You need deep fluency in both — every hacking tool runs from a command line, and most targets run Windows.',
+    topics:['Linux CLI','File permissions','Process management','Windows internals','Active Directory','PowerShell','Bash scripting'],
+    items:[
+      {n:'Linux mastery',       d:'CLI, filesystem hierarchy, permissions model, process management — Kali is home base'},
+      {n:'Bash scripting',      d:'Automate recon tasks and attack workflows without leaving the terminal'},
+      {n:'Windows internals',   d:'Registry, lsass, svchost, winlogon — know what is normal vs suspicious'},
+      {n:'Active Directory',    d:'Domains, forests, Kerberos, GPOs, trusts — the enterprise attack surface'},
+      {n:'PowerShell',          d:'Living-off-the-land technique — most organisations literally cannot block it'},
+    ],
+    links:[
+      {n:'OverTheWire: Bandit',            t:'tool',   u:'https://overthewire.org/wargames/bandit/',               d:'Best free Linux wargame — terminal only'},
+      {n:'TryHackMe Linux Fundamentals',   t:'course', u:'https://tryhackme.com/module/linux-fundamentals',        d:'Free guided Linux module'},
+      {n:'John Hammond',                   t:'yt',     u:'https://www.youtube.com/@_JohnHammond',                  d:'Walkthroughs, CTFs, tutorials'},
+      {n:'IppSec',                         t:'yt',     u:'https://www.youtube.com/@ippsec',                        d:'HackTheBox walkthroughs — excellent'},
+      {n:'TCM Security Academy',           t:'course', u:'https://academy.tcm-sec.com/',                           d:'Paid — best value paid courses'},
+      {n:'Linux Journey',                  t:'web',    u:'https://linuxjourney.com/',                              d:'Free interactive Linux lessons'},
+      {n:'SS64 Command Reference',         t:'book',   u:'https://ss64.com/',                                      d:'CLI reference for Linux, PS, CMD'},
+    ]
+  },
+  { id:'c3', type:'foundation', name:'Programming & scripting',
+    desc:'You do not need to be a developer. You need to write short practical tools, read exploit PoC code without confusion, and automate repetitive tasks.',
+    topics:['Python basics','Socket programming','requests library','Bash scripting','Reading CVE PoC','argparse','Threading'],
+    items:[
+      {n:'Python',          d:'Primary hacking language — tools, exploit adaption, automation all live here'},
+      {n:'Bash one-liners', d:'Glue multiple tools together and automate enumeration pipelines'},
+      {n:'Socket programming', d:'Build TCP clients/servers — how netcat works internally'},
+      {n:'Reading PoC code',d:'GitHub is full of CVE exploit code you must understand before running'},
+      {n:'Tool building',   d:'Port scanner, directory brute-forcer, banner grabber — your first portfolio pieces'},
+    ],
+    links:[
+      {n:'Automate the Boring Stuff (free)', t:'book',   u:'https://automatetheboringstuff.com/',                        d:'Best free Python book'},
+      {n:'TCM — Python 101 for Hackers',    t:'course', u:'https://academy.tcm-sec.com/p/python-101-for-hackers',       d:'Paid — hacking-focused Python'},
+      {n:'Corey Schafer (Python)',           t:'yt',     u:'https://www.youtube.com/@coreyms',                           d:'Best Python YouTube tutorials'},
+      {n:'NeuralNine (Python hacking)',      t:'yt',     u:'https://www.youtube.com/@NeuralNine',                        d:'Hacking tools in Python'},
+      {n:'Official Python Docs',            t:'book',   u:'https://docs.python.org/3/',                                 d:'Reference documentation'},
+      {n:'GitHub — CVE PoC repos',          t:'tool',   u:'https://github.com/search?q=CVE+PoC&type=repositories',      d:'Real exploit code to study'},
+    ]
+  },
+  { id:'c4', type:'foundation', name:'Cryptography & auth',
+    desc:'Understand crypto well enough to break it when it is misused. You will not implement it — you will spot when someone else implemented it wrong.',
+    topics:['Symmetric encryption','Asymmetric encryption','Hashing & salting','TLS handshake','Password cracking','JWT attacks','PKI basics'],
+    items:[
+      {n:'Hashing',             d:'MD5, SHA1, bcrypt — why unsalted hashes fall to hashcat in seconds'},
+      {n:'TLS/SSL',             d:'Handshake step by step — certificate validation, downgrade attacks'},
+      {n:'Authentication flows', d:'Sessions, cookies, JWTs, OAuth — where each one breaks down'},
+      {n:'Password cracking',   d:'Dictionary, rule-based, mask attacks with hashcat and John the Ripper'},
+    ],
+    links:[
+      {n:'Computerphile',                 t:'yt',     u:'https://www.youtube.com/@Computerphile',                    d:'Best crypto explainers on YouTube'},
+      {n:'CyberChef',                     t:'tool',   u:'https://gchq.github.io/CyberChef/',                         d:'Browser crypto swiss army knife'},
+      {n:'PortSwigger Auth Labs',         t:'course', u:'https://portswigger.net/web-security/authentication',        d:'Free hands-on auth attack labs'},
+      {n:'hashcat wiki',                  t:'book',   u:'https://hashcat.net/wiki/',                                  d:'Official hashcat documentation'},
+      {n:'Crypto 101 (free book)',        t:'book',   u:'https://www.crypto101.io/',                                  d:'Free intro cryptography book'},
+      {n:'TryHackMe Cryptography',        t:'course', u:'https://tryhackme.com/module/cryptography',                  d:'Free interactive module'},
+    ]
+  },
+  { id:'c5', type:'lifecycle', name:'Reconnaissance',
+    desc:'The most underrated phase. Great hackers spend more time here than anywhere else. Build a complete picture of the target without ever touching it.',
+    topics:['OSINT','Google dorks','Shodan','DNS enumeration','Subdomain brute-force','Email harvesting','Whois / ARIN'],
+    items:[
+      {n:'OSINT',            d:'Open-source intelligence — domains, emails, employees, infrastructure, history'},
+      {n:'Google dorks',     d:'Advanced search operators to surface exposed files, login pages, cameras'},
+      {n:'Shodan',           d:'Search engine for internet-connected devices — find open ports at scale'},
+      {n:'DNS enumeration',  d:'Zone transfers, subdomain brute-force, reverse DNS lookups'},
+      {n:'Email harvesting', d:'theHarvester, Hunter.io — employee emails for social engineering recon'},
+    ],
+    links:[
+      {n:'OSINT Framework',             t:'web',    u:'https://osintframework.com/',                                d:'Interactive map of OSINT tools'},
+      {n:'Shodan.io',                   t:'tool',   u:'https://www.shodan.io/',                                    d:'IoT and service search engine'},
+      {n:'OSINT Curious Project',       t:'yt',     u:'https://www.youtube.com/@OSINTCurious',                    d:'OSINT YouTube channel'},
+      {n:'IntelTechniques (Bazzell)',   t:'web',    u:'https://inteltechniques.com/',                              d:'Professional OSINT training'},
+      {n:'TCM — OSINT Fundamentals',   t:'course', u:'https://academy.tcm-sec.com/p/osint-fundamentals',          d:'Paid beginner OSINT course'},
+      {n:'TryHackMe OSINT module',      t:'course', u:'https://tryhackme.com/module/osint',                       d:'Free interactive module'},
+      {n:'Google Hacking DB (ExploitDB)', t:'tool', u:'https://www.exploit-db.com/google-hacking-database',       d:'Dork database with search'},
+    ]
+  },
+  { id:'c6', type:'lifecycle', name:'Scanning & enumeration',
+    desc:'Active probing of the target. Find every open port, identify every service version, and map every potential entry point before you write a single exploit.',
+    topics:['nmap','masscan','Service fingerprinting','NSE scripts','SMB enumeration','Web crawling','Vulnerability scanning'],
+    items:[
+      {n:'nmap',             d:'Scan types (-sS, -sV, -A), NSE scripts, timing templates, output formats'},
+      {n:'Service enumeration', d:'Banner grabbing, version detection, default credential checking'},
+      {n:'SMB / NetBIOS',    d:'enum4linux, smbclient — essential for any Windows network recon'},
+      {n:'Web crawling',     d:'Burp suite spider, ffuf, gobuster — map every endpoint and parameter'},
+      {n:'Vuln scanning',    d:'Nessus, OpenVAS, Nikto — automated weakness identification at scale'},
+    ],
+    links:[
+      {n:'nmap official book (free)',     t:'book',   u:'https://nmap.org/book/toc.html',                             d:'Comprehensive free nmap guide'},
+      {n:'TryHackMe — Nmap room',        t:'course', u:'https://tryhackme.com/room/furthernmap',                     d:'Free interactive nmap lab'},
+      {n:'HackTricks — Network pentest', t:'book',   u:'https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-network', d:'Free reference wiki'},
+      {n:'HackerSploit',                 t:'yt',     u:'https://www.youtube.com/@HackerSploit',                     d:'Tool tutorials and walkthroughs'},
+      {n:'TCM — Practical Ethical Hacking', t:'course', u:'https://academy.tcm-sec.com/p/practical-ethical-hacking-the-complete-course', d:'Best paid beginner course'},
+      {n:'SecLists (wordlists)',          t:'tool',   u:'https://github.com/danielmiessler/SecLists',                 d:'Essential wordlist collection'},
+    ]
+  },
+  { id:'c7', type:'lifecycle', name:'Exploitation',
+    desc:'Turning discovered vulnerabilities into actual access. This is the most hands-on phase — practice it daily in lab environments. Never on systems you do not own.',
+    topics:['Metasploit','Buffer overflows','Password attacks','Phishing','SQL injection','XSS','SSRF','Command injection'],
+    items:[
+      {n:'Metasploit Framework', d:'Modules, payloads, meterpreter sessions — the exploitation swiss army knife'},
+      {n:'Web app attacks',      d:'SQLi, XSS, CSRF, IDOR, SSRF, command injection — all OWASP Top 10'},
+      {n:'Buffer overflows',     d:'Stack-based BoF, EIP control, shellcode — foundational binary exploitation'},
+      {n:'Password attacks',     d:'Online (Hydra) vs offline (hashcat) — credential spraying and stuffing'},
+      {n:'Social engineering',   d:'Phishing, pretexting, SET toolkit — exploiting the human layer'},
+    ],
+    links:[
+      {n:'HackTheBox',                    t:'tool',   u:'https://www.hackthebox.com/',                               d:'Industry-standard practice platform'},
+      {n:'TryHackMe',                     t:'tool',   u:'https://tryhackme.com/',                                    d:'Beginner-friendly guided labs'},
+      {n:'VulnHub',                       t:'tool',   u:'https://www.vulnhub.com/',                                  d:'Free downloadable vulnerable VMs'},
+      {n:'PortSwigger Web Academy',       t:'course', u:'https://portswigger.net/web-security',                      d:'Best free web exploitation labs'},
+      {n:'Metasploit Unleashed (free)',   t:'book',   u:'https://www.offensive-security.com/metasploit-unleashed/',  d:'Free comprehensive Metasploit guide'},
+      {n:'LiveOverflow',                  t:'yt',     u:'https://www.youtube.com/@LiveOverflow',                     d:'CTF and binary exploitation'},
+      {n:'John Hammond',                  t:'yt',     u:'https://www.youtube.com/@_JohnHammond',                     d:'Walkthroughs and exploitation demos'},
+      {n:'TCM — Buffer Overflow prep',   t:'course', u:'https://academy.tcm-sec.com/p/practical-buffer-overflows',  d:'Paid — OSCP prep focused'},
+    ]
+  },
+  { id:'c8', type:'lifecycle', name:'Post-exploitation',
+    desc:'What a real attacker does after getting in. Understanding post-exploitation is also what makes you a far better defender — you know exactly what to look for.',
+    topics:['Privilege escalation','Lateral movement','Persistence','Pivoting & tunneling','Data exfiltration','Covering tracks','Kerberoasting'],
+    items:[
+      {n:'Privilege escalation', d:'Linux: SUID, sudo misconfig, kernel exploits · Windows: token impersonation, AlwaysInstallElevated'},
+      {n:'Lateral movement',    d:'Pass-the-hash, pass-the-ticket, WMI, PsExec — moving through a compromised network'},
+      {n:'Persistence',         d:'Cron jobs, registry run keys, scheduled tasks, backdoor accounts — staying in'},
+      {n:'Pivoting',            d:'SSH tunnels, proxychains, chisel, ligolo-ng — routing through compromised hosts'},
+      {n:'Covering tracks',     d:'Log clearing, artifact removal, timestomping — anti-forensics techniques'},
+    ],
+    links:[
+      {n:'GTFOBins',                          t:'tool',   u:'https://gtfobins.github.io/',                           d:'Linux privesc binary reference'},
+      {n:'LOLBAS Project',                    t:'tool',   u:'https://lolbas-project.github.io/',                     d:'Windows living-off-the-land binaries'},
+      {n:'HackTricks (free wiki)',            t:'book',   u:'https://book.hacktricks.xyz/',                          d:'Most comprehensive free reference'},
+      {n:'TCM — Linux PrivEsc',              t:'course', u:'https://academy.tcm-sec.com/p/linux-privilege-escalation', d:'Paid course'},
+      {n:'TCM — Windows PrivEsc',            t:'course', u:'https://academy.tcm-sec.com/p/windows-privilege-escalation-for-beginners', d:'Paid course'},
+      {n:'TryHackMe PrivEsc paths',          t:'course', u:'https://tryhackme.com/module/privilege-escalation-and-shells', d:'Free module'},
+      {n:'IppSec',                           t:'yt',     u:'https://www.youtube.com/@ippsec',                       d:'Post-exploitation walkthroughs'},
+    ]
+  },
+  { id:'c9', type:'domain', name:'Web application security',
+    desc:'The largest attack surface in modern organisations. Most bug bounties live here. Web app security is its own deep discipline worth specialising in.',
+    topics:['OWASP Top 10','SQL injection','XSS','CSRF','IDOR','SSRF','XXE','Auth bypass','File upload','API security','GraphQL'],
+    items:[
+      {n:'OWASP Top 10',         d:'The canonical list of most critical web vulnerabilities — know all 10 cold'},
+      {n:'Injection attacks',    d:'SQLi, command injection, LDAP injection, NoSQL injection — all variants'},
+      {n:'Broken auth & sessions', d:'Session fixation, CSRF, JWT attacks, OAuth misconfigurations'},
+      {n:'SSRF & XXE',           d:'Server-side request forgery and XML external entities — internal access vectors'},
+      {n:'IDOR & access control', d:'Changing object IDs to access other users\' data — very common in bug bounty'},
+      {n:'API security',         d:'REST and GraphQL endpoints — often less tested and more vulnerable than web UIs'},
+    ],
+    links:[
+      {n:'PortSwigger Web Academy',    t:'course', u:'https://portswigger.net/web-security',                         d:'Best free web security course online'},
+      {n:'OWASP Top 10',               t:'book',   u:'https://owasp.org/www-project-top-ten/',                       d:'Official OWASP reference'},
+      {n:'OWASP Juice Shop',           t:'tool',   u:'https://owasp.org/www-project-juice-shop/',                    d:'Modern vulnerable web application'},
+      {n:'DVWA',                       t:'tool',   u:'https://dvwa.co.uk/',                                          d:'Damn Vulnerable Web Application'},
+      {n:'Rana Khalil',                t:'yt',     u:'https://www.youtube.com/@RanaKhalil101',                       d:'YouTube — PortSwigger lab walkthroughs'},
+      {n:'NahamSec',                   t:'yt',     u:'https://www.youtube.com/@NahamSec',                            d:'YouTube — web hacking & bug bounty'},
+      {n:'STÖK',                       t:'yt',     u:'https://www.youtube.com/@STOKfredrik',                         d:'YouTube — bug bounty methodology'},
+      {n:'HackTheBox web challenges',  t:'tool',   u:'https://app.hackthebox.com/challenges',                        d:'Practice web hacking challenges'},
+    ]
+  },
+  { id:'c10', type:'domain', name:'Network & infrastructure',
+    desc:'On-premise networks, firewalls, routers, switches, and services. Most corporate environments have a vast internal network attack surface.',
+    topics:['Firewall evasion','VLAN hopping','MITM attacks','ARP spoofing','DHCP attacks','Traffic sniffing','Network pivoting'],
+    items:[
+      {n:'MITM attacks',        d:'ARP spoofing, DNS poisoning — intercept and manipulate traffic on the wire'},
+      {n:'Firewall evasion',    d:'Fragmentation, tunneling, protocol confusion — bypassing perimeter defences'},
+      {n:'VLAN hopping',        d:'Double tagging and switch spoofing — crossing network segments'},
+      {n:'Traffic sniffing',    d:'Passive collection of credentials, cookies, and sensitive data in transit'},
+      {n:'Network pivoting',    d:'Using a compromised host as a jump point deeper into the network'},
+    ],
+    links:[
+      {n:'David Bombal',               t:'yt',     u:'https://www.youtube.com/@davidbombal',                        d:'Networking and hacking combined'},
+      {n:'NetworkChuck',               t:'yt',     u:'https://www.youtube.com/@NetworkChuck',                       d:'Network concepts and demos'},
+      {n:'Bettercap docs',             t:'book',   u:'https://www.bettercap.org/docs/',                             d:'MITM framework documentation'},
+      {n:'HackTricks — Network',       t:'book',   u:'https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-network', d:'Free reference'},
+      {n:'TryHackMe Network Security', t:'course', u:'https://tryhackme.com/module/network-security',               d:'Free module'},
+      {n:'Hak5',                       t:'yt',     u:'https://www.youtube.com/@hak5',                               d:'Network attack tools and demos'},
+    ]
+  },
+  { id:'c11', type:'domain', name:'Active Directory & Windows',
+    desc:'Compromising Active Directory means compromising the entire organisation. This is where the most impactful pentesting work happens.',
+    topics:['Kerberoasting','AS-REP roasting','Pass-the-hash','BloodHound','DCSync','NTLM relay','GPO abuse','ACL attacks'],
+    items:[
+      {n:'Kerberoasting',   d:'Request Kerberos service tickets and crack them offline — no special privileges needed'},
+      {n:'BloodHound',      d:'Graph-based AD attack path mapping — visually find the path to Domain Admin'},
+      {n:'NTLM relay',      d:'Relay captured authentication to gain access to other machines on the network'},
+      {n:'Pass-the-hash',   d:'Use captured NTLM hashes to authenticate directly without cracking them'},
+      {n:'DCSync',          d:'Simulate a domain controller replication request to pull all credential hashes'},
+    ],
+    links:[
+      {n:'TCM — Practical AD Attacks', t:'course', u:'https://academy.tcm-sec.com/p/practical-active-directory-for-red-teamers', d:'Best AD pentesting course'},
+      {n:'John Hammond — AD intro',    t:'yt',     u:'https://www.youtube.com/watch?v=pKtDQtsubio',                 d:'Free Active Directory intro series'},
+      {n:'BloodHound docs',            t:'book',   u:'https://bloodhound.readthedocs.io/en/latest/',                d:'Official BloodHound documentation'},
+      {n:'HackTricks — AD Methodology',t:'book',  u:'https://book.hacktricks.xyz/windows-hardening/active-directory-methodology', d:'Free reference'},
+      {n:'Altered Security (CRTP)',    t:'course', u:'https://www.alteredsecurity.com/adlab',                        d:'Paid lab-focused AD cert'},
+      {n:'HackTheBox Pro Labs',        t:'tool',   u:'https://www.hackthebox.com/hacker/pro-labs',                  d:'Full AD lab environments'},
+    ]
+  },
+  { id:'c12', type:'domain', name:'Cloud, wireless & mobile',
+    desc:'Cloud misconfigurations are the most common high-severity finding in modern pentests. Wireless and mobile round out a complete skill set.',
+    topics:['AWS IAM misconfig','S3 bucket exposure','Azure AD attacks','WPA2 handshake','Evil twin AP','Android APK analysis','iOS pentesting','Frida hooking'],
+    items:[
+      {n:'Cloud security',      d:'AWS/Azure/GCP IAM misconfigs, exposed storage, SSRF to IMDS metadata service'},
+      {n:'Wireless attacks',    d:'WPA2 handshake capture, PMKID attack, evil twin AP, deauthentication attacks'},
+      {n:'Android security',    d:'APK reverse engineering, Frida dynamic analysis, intent hijacking'},
+      {n:'iOS security',        d:'Jailbreak-based analysis, certificate pinning bypass, Objection toolkit'},
+    ],
+    links:[
+      {n:'CloudGoat (Rhino Security)', t:'tool',   u:'https://github.com/RhinoSecurityLabs/cloudgoat',              d:'Vulnerable AWS environment to attack'},
+      {n:'Hacking the Cloud',          t:'book',   u:'https://hackingthe.cloud/',                                   d:'Cloud attack techniques reference'},
+      {n:'HackTricks Cloud',           t:'book',   u:'https://cloud.hacktricks.xyz/',                               d:'Free cloud pentesting reference'},
+      {n:'Aircrack-ng docs',           t:'book',   u:'https://www.aircrack-ng.org/documentation.html',              d:'Wireless attack toolkit docs'},
+      {n:'OWASP Mobile Top 10',        t:'book',   u:'https://owasp.org/www-project-mobile-top-10/',                d:'Mobile vulnerability reference'},
+      {n:'Frida documentation',        t:'book',   u:'https://frida.re/docs/home/',                                 d:'Dynamic instrumentation toolkit'},
+      {n:'MobSF',                      t:'tool',   u:'https://github.com/MobSF/Mobile-Security-Framework-MobSF',   d:'Automated mobile app analysis'},
+    ]
+  },
+  { id:'hw1', type:'hardware', name:'Microcontrollers & DIY tools',
+    desc:'A $4 ESP32 can become a WiFi deauther, a credential harvester, or a Bluetooth scanner. This is where software hacking meets physical craft.',
+    topics:['Arduino','ESP32 / ESP8266','Raspberry Pi','MicroPython','GPIO','I2C / SPI bus','USB HID emulation','Custom firmware'],
+    items:[
+      {n:'Arduino',         d:'Best first microcontroller — massive community, simple IDE, 5V logic. Start with Uno or Nano.'},
+      {n:'ESP32 / ESP8266', d:'WiFi + Bluetooth built-in, costs $4 — build deauthers, rogue APs, BLE scanners easily'},
+      {n:'Raspberry Pi',    d:'Full Linux on a credit-card-sized board — run Kali, build portable attack rigs'},
+      {n:'MicroPython',     d:'Python that runs directly on microcontrollers — fast prototyping of attack tools'},
+      {n:'USB HID emulation', d:'Make a board appear as a USB keyboard to inject keystrokes automatically'},
+      {n:'Custom firmware', d:'Flash modified firmware onto devices to unlock features or alter behaviour'},
+    ],
+    links:[
+      {n:'Arduino official tutorials',  t:'book',   u:'https://docs.arduino.cc/tutorials/',                         d:'Official beginner tutorials'},
+      {n:'Espressif ESP32 docs',        t:'book',   u:'https://docs.espressif.com/projects/arduino-esp32/en/latest/', d:'Official ESP32 reference'},
+      {n:'Andreas Spiess',              t:'yt',     u:'https://www.youtube.com/@AndreasSpiess',                     d:'YouTube — ESP32 & IoT hardware expert'},
+      {n:'GreatScott!',                 t:'yt',     u:'https://www.youtube.com/@GreatScottLab',                     d:'YouTube — electronics and Arduino projects'},
+      {n:'Adafruit Learning System',    t:'course', u:'https://learn.adafruit.com/',                                 d:'Excellent free hardware tutorials'},
+      {n:'Raspberry Pi Foundation docs',t:'book',   u:'https://www.raspberrypi.com/documentation/',                  d:'Official Raspberry Pi documentation'},
+      {n:'Hackaday.io',                 t:'web',    u:'https://hackaday.io/',                                        d:'DIY hardware project community'},
+      {n:'MicroPython docs',            t:'book',   u:'https://docs.micropython.org/en/latest/',                    d:'MicroPython official reference'},
+    ]
+  },
+  { id:'hw2', type:'hardware', name:'DIY hacking devices',
+    desc:'Build clones of commercial hacking tools at a fraction of the price. Building them from scratch teaches you far more than just buying them off the shelf.',
+    topics:['WiFi Pineapple clone','Rubber Ducky clone','Flipper Zero concepts','HackRF','RFID/NFC cloner','Bluetooth sniffer','LAN Turtle clone','Packet injector'],
+    items:[
+      {n:'WiFi Pineapple clone', d:'ESP8266 + hostapd on Pi — rogue AP, captive portal, credential harvesting at scale'},
+      {n:'Rubber Ducky clone',   d:'Digispark ($2) or Raspberry Pi Pico emulating a USB HID keyboard for payload injection'},
+      {n:'Flipper Zero concepts', d:'Sub-GHz radio, NFC, infrared, iButton — multi-protocol attack tool (or build your own)'},
+      {n:'HackRF / SDR dongle',  d:'Software-defined radio to capture and replay RF signals — garage doors, key fobs'},
+      {n:'RFID / NFC cloner',    d:'PN532 module + Arduino — clone access cards, read NFC tags, execute replay attacks'},
+    ],
+    links:[
+      {n:'Hak5',                       t:'yt',     u:'https://www.youtube.com/@hak5',                               d:'YouTube — makers of commercial tools'},
+      {n:'ESP8266 Deauther (GitHub)',  t:'tool',   u:'https://github.com/SpacehuhnTech/esp8266_deauther',           d:'WiFi deauth tool — source and guide'},
+      {n:'Flipper Zero docs',          t:'book',   u:'https://docs.flipper.net/',                                    d:'Official Flipper Zero documentation'},
+      {n:'Hak5 Rubber Ducky payloads', t:'tool',   u:'https://github.com/hak5/usbrubberducky-payloads',             d:'Community payload library'},
+      {n:'Pico-ducky (GitHub)',        t:'tool',   u:'https://github.com/dbisu/pico-ducky',                         d:'Turn Pi Pico into Rubber Ducky'},
+      {n:'PN532 NFC tutorial',         t:'web',    u:'https://lastminuteengineers.com/pn532-nfc-rfid-module-arduino-tutorial/', d:'RFID/NFC with Arduino guide'},
+      {n:'Roger Omega (Flipper YT)',   t:'yt',     u:'https://www.youtube.com/@RogerOmega',                         d:'YouTube — Flipper Zero tutorials'},
+    ]
+  },
+  { id:'hw3', type:'hardware', name:'Hardware attack techniques',
+    desc:'Physically attacking devices — reading debug ports, dumping flash memory, injecting faults, performing side-channel analysis. These techniques bypass software security entirely.',
+    topics:['JTAG / SWD debugging','UART serial console','SPI / I2C bus sniffing','Flash memory dump','Fault injection','Voltage glitching','Power analysis (SCA)','PCB reverse engineering'],
+    items:[
+      {n:'JTAG / SWD',         d:'Debug interface on almost every embedded chip — pause execution, read RAM, extract firmware'},
+      {n:'UART serial console', d:'Often left open on IoT devices — gives a direct root shell or bootloader access'},
+      {n:'SPI / I2C sniffing', d:'Read data between chips using a logic analyser — extract keys, configs, firmware blobs'},
+      {n:'Flash memory dump',  d:'Desolder NAND/NOR flash chip, read with programmer — extract full device filesystem'},
+      {n:'Voltage glitching',  d:'Brief power spike to skip a CPU instruction — bypass secure boot, extract keys'},
+      {n:'Side-channel analysis', d:'Power consumption or EM emissions leak cryptographic keys — ChipWhisperer platform'},
+    ],
+    links:[
+      {n:'ChipWhisperer docs',       t:'book',   u:'https://chipwhisperer.readthedocs.io/en/latest/',               d:'Side-channel attack platform & tutorials'},
+      {n:'stacksmashing',            t:'yt',     u:'https://www.youtube.com/@stacksmashing',                        d:'YouTube — hardware hacking expert'},
+      {n:'Joe Grand',                t:'yt',     u:'https://www.youtube.com/@JoeGrand',                             d:'YouTube — legendary hardware hacker'},
+      {n:'JTAGulator guide',         t:'web',    u:'http://www.grandideastudio.com/jtagulator/',                     d:'Automated JTAG identification tool'},
+      {n:'Bus Pirate docs',          t:'book',   u:'https://web.archive.org/web/2024/http://dangerousprototypes.com/docs/Bus_Pirate', d:'SPI/I2C/UART sniffing tool'},
+      {n:'EEVblog',                  t:'yt',     u:'https://www.youtube.com/@EEVblog',                              d:'YouTube — PCB analysis and electronics'},
+      {n:'Intro to Hardware Hacking', t:'yt',   u:'https://www.youtube.com/watch?v=6rJDE2GAPYQ',                   d:'YouTube — free beginner hardware talk'},
+    ]
+  },
+  { id:'hw4', type:'hardware', name:'Mobile hardware security',
+    desc:'Mobile phones are full computers with complex hardware stacks. Understanding the silicon, bootloaders, and debug interfaces unlocks vectors that pure software tools cannot reach.',
+    topics:['Bootloader unlocking','EDL / BROM mode','Baseband processor security','JTAG on mobile','Chip-off forensics','TrustZone / TEE','eMMC chip reading'],
+    items:[
+      {n:'Bootloader & fastboot', d:'Unlocking enables custom ROM flashing, root access, and verified boot bypass'},
+      {n:'EDL / BROM mode',     d:'Emergency Download Mode (Qualcomm) and Boot ROM (MediaTek) — DFU-level access'},
+      {n:'Baseband processor',  d:'Separate CPU handling all RF communications — historically significant attack surface'},
+      {n:'eMMC chip reading',   d:'Desolder storage chip, read directly with programmer — bypass encryption on some chipsets'},
+      {n:'TrustZone / TEE',     d:'ARM secure enclave holding biometric templates, DRM keys, payment credentials'},
+      {n:'JTAG on phones',      d:'Test pads on PCB expose JTAG — used in forensics to extract data from locked devices'},
+    ],
+    links:[
+      {n:'XDA Developers',              t:'web',    u:'https://xdaforums.com/',                                      d:'Bootloader, rooting, custom ROM community'},
+      {n:'Magisk documentation',        t:'book',   u:'https://topjohnwu.github.io/Magisk/',                         d:'Root and bootloader modification guide'},
+      {n:'OWASP Mobile Security Guide', t:'book',   u:'https://owasp.org/www-project-mobile-security-testing-guide/', d:'Free comprehensive mobile testing guide'},
+      {n:'Frida documentation',         t:'book',   u:'https://frida.re/docs/home/',                                 d:'Dynamic instrumentation for mobile'},
+      {n:'GSM Security Map',            t:'tool',   u:'https://gsmmap.org/',                                         d:'Cellular network security research map'},
+      {n:'MobSF',                       t:'tool',   u:'https://github.com/MobSF/Mobile-Security-Framework-MobSF',   d:'Automated mobile app analysis tool'},
+      {n:'LiveOverflow',                t:'yt',     u:'https://www.youtube.com/@LiveOverflow',                       d:'Mobile and hardware research content'},
+    ]
+  },
+  { id:'hw5', type:'hardware', name:'Network hardware hacking',
+    desc:'Routers, switches, and access points run embedded Linux with outdated kernels and default credentials. They are among the least-patched devices in any organisation.',
+    topics:['Router firmware extraction','binwalk analysis','OpenWRT / DD-WRT','UART on routers','Switch VLAN misconfiguration','Rogue access point','Network tap','PLC / SCADA basics'],
+    items:[
+      {n:'Router firmware extraction', d:'UART console or flash memory dump — get the root filesystem, find hardcoded creds'},
+      {n:'Firmware analysis',          d:'binwalk to unpack, strings to find credentials, Ghidra to reverse custom binaries'},
+      {n:'OpenWRT / DD-WRT',          d:'Flash open firmware — turn a $20 router into a full-featured attack platform'},
+      {n:'Rogue access point',         d:'Raspberry Pi + hostapd + DHCP server — man-in-the-middle entire network segments'},
+      {n:'Network tap',                d:'Passive optical or copper tap — invisibly capture all traffic on a link'},
+      {n:'PLC / SCADA basics',         d:'Industrial control systems — Modbus, DNP3, OPC-UA protocols and attack surface'},
+    ],
+    links:[
+      {n:'binwalk (GitHub)',           t:'tool',   u:'https://github.com/ReFirmLabs/binwalk',                       d:'Firmware analysis and extraction tool'},
+      {n:'OpenWRT wiki',               t:'book',   u:'https://openwrt.org/docs/start',                              d:'Open router firmware documentation'},
+      {n:'OWASP IoT Attack Surface',   t:'book',   u:'https://owasp.org/www-project-internet-of-things/',           d:'IoT security reference guide'},
+      {n:'Firmwalker (GitHub)',        t:'tool',   u:'https://github.com/craigz28/firmwalker',                      d:'Firmware filesystem scanner script'},
+      {n:'EEVblog',                    t:'yt',     u:'https://www.youtube.com/@EEVblog',                            d:'YouTube — electronics and PCB teardowns'},
+      {n:'S4 Conference (SCADA)',      t:'yt',     u:'https://www.youtube.com/@S4Conference',                       d:'YouTube — ICS and SCADA security talks'},
+      {n:'Hak5',                       t:'yt',     u:'https://www.youtube.com/@hak5',                               d:'YouTube — network hardware attack tools'},
+    ]
+  },
+  { id:'hw6', type:'hardware', name:'RF & radio hacking',
+    desc:'If it broadcasts, it can be captured and analysed. From garage doors to satellite communications, wireless signals are everywhere and mostly weakly protected.',
+    topics:['RTL-SDR dongle','HackRF One','GNU Radio','Sub-GHz signal replay','Key fob cloning','GSM / cellular sniffing','Zigbee / Z-Wave','ADS-B aircraft tracking'],
+    items:[
+      {n:'RTL-SDR dongle',   d:'$25 USB dongle receives 100 kHz to 1.7 GHz — the perfect first SDR for beginners'},
+      {n:'HackRF One',       d:'Transmit and receive 1 MHz to 6 GHz — replay attacks, signal injection, RF analysis'},
+      {n:'GNU Radio',        d:'Graphical signal processing framework — build custom demodulators and protocol analysers'},
+      {n:'Sub-GHz replay',   d:'Capture key fob and garage door signals with SDR, replay them to unlock'},
+      {n:'GSM / cellular',   d:'Capture IMSI identifiers, intercept unencrypted 2G calls with SDR + gr-gsm'},
+      {n:'Zigbee / Z-Wave',  d:'Smart home protocols — sniff with ApiMote or Ubertooth, replay sensor commands'},
+    ],
+    links:[
+      {n:'RTL-SDR.com',              t:'web',    u:'https://www.rtl-sdr.com/',                                      d:'Best RTL-SDR beginner guides and blog'},
+      {n:'GNU Radio tutorials',      t:'book',   u:'https://wiki.gnuradio.org/index.php/Tutorials',                 d:'Official GNU Radio wiki tutorials'},
+      {n:'Michael Ossmann',          t:'yt',     u:'https://www.youtube.com/@michaelossmann',                       d:'YouTube — HackRF creator\'s channel'},
+      {n:'HackRF One docs',          t:'book',   u:'https://hackrf.readthedocs.io/en/latest/',                      d:'Official HackRF documentation'},
+      {n:'WebSDR (try SDR online)',   t:'tool',   u:'https://www.websdr.org/',                                       d:'Try software-defined radio in browser'},
+      {n:'Hak5 RF content',          t:'yt',     u:'https://www.youtube.com/@hak5',                                 d:'YouTube — RF attack tool demos'},
+      {n:'r/RTLSDR community',       t:'web',    u:'https://www.reddit.com/r/RTLSDR/',                              d:'Active RTL-SDR community on Reddit'},
+    ]
+  },
+  { id:'p1', type:'pro', name:'Tools & lab setup',
+    desc:'Knowing the tools is not the same as knowing the concepts — but tools are what you use to apply concepts. Master your toolkit and your lab becomes your training ground.',
+    topics:['Kali Linux','Metasploit Framework','Burp Suite','nmap','Wireshark','hashcat','gobuster / ffuf','BloodHound','Cobalt Strike / Sliver'],
+    items:[
+      {n:'Kali Linux',     d:'The primary attack distro — 600+ pre-installed tools, regularly updated'},
+      {n:'Burp Suite',     d:'Proxy, active scanner, intruder — indispensable web hacking platform'},
+      {n:'Metasploit',     d:'Module library for exploitation, post-exploitation, and payload generation'},
+      {n:'Home lab setup', d:'VirtualBox + Kali + Metasploitable 2 + Windows VM — your isolated practice range'},
+    ],
+    links:[
+      {n:'Kali Linux downloads',       t:'tool',   u:'https://www.kali.org/get-kali/',                              d:'Official Kali Linux download'},
+      {n:'VirtualBox',                 t:'tool',   u:'https://www.virtualbox.org/wiki/Downloads',                   d:'Free VM hypervisor'},
+      {n:'Metasploitable 2',           t:'tool',   u:'https://sourceforge.net/projects/metasploitable/',             d:'Intentionally vulnerable VM'},
+      {n:'PortSwigger Burp Academy',   t:'course', u:'https://portswigger.net/web-security',                        d:'Free Burp Suite training'},
+      {n:'Metasploit Unleashed (free)',t:'book',   u:'https://www.offensive-security.com/metasploit-unleashed/',     d:'Free comprehensive Metasploit guide'},
+      {n:'SecLists',                   t:'tool',   u:'https://github.com/danielmiessler/SecLists',                   d:'Essential wordlist and payload collection'},
+    ]
+  },
+  { id:'p2', type:'pro', name:'Frameworks & methodology',
+    desc:'Real pentesters follow structured methodologies. Frameworks give you a repeatable process, common language with clients, and legal protection.',
+    topics:['PTES','OWASP Testing Guide','NIST 800-115','MITRE ATT&CK','Cyber Kill Chain','CVSS scoring','Rules of engagement','Threat modelling (STRIDE)'],
+    items:[
+      {n:'MITRE ATT&CK',    d:'The definitive taxonomy of adversary techniques — used in red teaming and threat hunting'},
+      {n:'PTES',            d:'Penetration Testing Execution Standard — scoping, intel, threat modelling, reporting'},
+      {n:'Cyber Kill Chain', d:'Lockheed Martin\'s model: recon → weaponize → deliver → exploit → install → C2 → action'},
+      {n:'CVSS scoring',    d:'Communicating vulnerability severity to clients in a standardised, defensible way'},
+    ],
+    links:[
+      {n:'MITRE ATT&CK website',       t:'web',    u:'https://attack.mitre.org/',                                   d:'Official ATT&CK framework and navigator'},
+      {n:'PTES Standard',              t:'book',   u:'http://www.pentest-standard.org/',                             d:'Penetration Testing Execution Standard'},
+      {n:'OWASP Testing Guide v4.2',   t:'book',   u:'https://owasp.org/www-project-web-security-testing-guide/',   d:'Free web testing methodology guide'},
+      {n:'CVSS Calculator (NVD)',       t:'tool',   u:'https://nvd.nist.gov/vuln-metrics/cvss',                     d:'Official NIST CVSS scoring calculator'},
+      {n:'NIST SP 800-115',            t:'book',   u:'https://csrc.nist.gov/publications/detail/sp/800-115/final',  d:'Technical guide to security testing'},
+    ]
+  },
+  { id:'p3', type:'pro', name:'Reporting & communication',
+    desc:'Finding vulnerabilities is half the job. The other half is communicating them so they actually get fixed. A vulnerability nobody understands is a vulnerability nobody patches.',
+    topics:['Executive summary','Technical findings','CVSS scoring','PoC screenshots','Remediation recommendations','Responsible disclosure','NDA & scope agreements'],
+    items:[
+      {n:'Executive summary',       d:'Non-technical overview for leadership — risk in business terms, not CVE numbers'},
+      {n:'Technical findings',      d:'Title, severity, description, reproduction steps, impact, remediation guidance'},
+      {n:'Responsible disclosure',  d:'Coordinated disclosure timelines and how to report to vendors ethically'},
+    ],
+    links:[
+      {n:'TCM Sample Report (GitHub)', t:'tool',   u:'https://github.com/hmaverickadams/TCM-Security-Sample-Pentest-Report', d:'Free pentest report template'},
+      {n:'CVSS Calculator',            t:'tool',   u:'https://nvd.nist.gov/vuln-metrics/cvss',                      d:'Official NIST CVSS scoring tool'},
+      {n:'HackerOne Disclosure Policy',t:'book',   u:'https://www.hackerone.com/vulnerability-and-security-testing-policy', d:'Responsible disclosure guidelines'},
+      {n:'TCM — Writing Reports (YT)', t:'yt',     u:'https://www.youtube.com/watch?v=EOoBAq6z4Zk',                d:'YouTube — free report writing guide'},
+    ]
+  },
+  { id:'p4', type:'pro', name:'Career paths & certifications',
+    desc:'Where to go and what to prove. The cert market is noisy — most paper certs mean less than demonstrated skill, but a few carry real weight with hiring managers.',
+    topics:['Bug bounty hunting','CTF competitions','OSCP (OffSec)','PNPT (TCM)','CEH (EC-Council)','eJPT (INE)','CRTP (Altered Security)','BSCP (PortSwigger)','Red teaming'],
+    items:[
+      {n:'Bug bounty', d:'HackerOne, Bugcrowd — get paid to find real vulnerabilities. Best portfolio builder available.'},
+      {n:'CTF competitions', d:'PicoCTF, HTB CTFs, DEFCON quals — competitive hacking sharpens every skill simultaneously'},
+      {n:'OSCP',       d:'Gold-standard practical pentesting cert — 24hr live exam, no multiple choice. Opens every door.'},
+      {n:'PNPT',       d:'TCM Security\'s practical cert — more affordable than OSCP, great stepping stone after eJPT'},
+    ],
+    links:[
+      {n:'HackerOne Hacker101 (free)',  t:'course', u:'https://www.hacker101.com/',                                  d:'Free bug bounty training platform'},
+      {n:'Bugcrowd University (free)',  t:'course', u:'https://www.bugcrowd.com/hackers/bugcrowd-university/',       d:'Free bug bounty training'},
+      {n:'CTFtime.org',                t:'tool',   u:'https://ctftime.org/',                                         d:'CTF competition calendar and ratings'},
+      {n:'PicoCTF (beginner)',          t:'tool',   u:'https://picoctf.org/',                                         d:'Free beginner-friendly CTF platform'},
+      {n:'OffSec OSCP (PEN-200)',       t:'course', u:'https://www.offsec.com/courses/pen-200/',                     d:'Gold standard pentesting certification'},
+      {n:'TCM PNPT',                   t:'course', u:'https://certifications.tcm-sec.com/pnpt/',                     d:'Practical and affordable cert'},
+      {n:'eJPT (INE Security)',         t:'course', u:'https://ine.com/learning/certifications/internal/elearnsecurity-junior-penetration-tester-certification', d:'Good first certification'},
+      {n:'InsiderPhD',                 t:'yt',     u:'https://www.youtube.com/@InsiderPhD',                          d:'YouTube — beginner bug bounty hunting'},
+    ]
+  },
+];
+
+const FILTERS = [
+  { key:'all',        label:'All topics',         color:'#888780' },
+  { key:'foundation', label:'Foundations',        color:'#378ADD' },
+  { key:'lifecycle',  label:'Attack lifecycle',   color:'#7F77DD' },
+  { key:'domain',     label:'Target domains',     color:'#D85A30' },
+  { key:'hardware',   label:'Hardware hacking',   color:'#EF9F27' },
+  { key:'pro',        label:'Professional skills', color:'#1D9E75' },
+];
+
+let activeFilter = 'all';
+let activeCard   = null;
+
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function buildFilters() {
+  document.getElementById('filter-row').innerHTML = FILTERS.map(f =>
+    `<button class="filter-btn${f.key==='all'?' on':''}" id="fb-${f.key}"
+       style="${f.key==='all'?'background:'+f.color+';color:#0a0c0f':'background:var(--surface2);'}"
+       onclick="setFilter('${f.key}','${f.color}')">${f.label}</button>`
+  ).join('');
+}
+
+function setFilter(key, color) {
+  activeFilter = key; activeCard = null;
+  document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('on'); b.style.background = 'var(--surface2)'; b.style.color = ''; });
+  const btn = document.getElementById('fb-' + key);
+  btn.classList.add('on');
+  btn.style.background = color;
+  btn.style.color = '#0a0c0f';
+  renderGrid();
+  document.getElementById('detail-panel').classList.remove('visible');
+  document.getElementById('detail-panel').innerHTML = '';
+}
+
+function renderGrid() {
+  const visible = activeFilter === 'all' ? cats : cats.filter(c => c.type === activeFilter);
+  const cols = [[], [], []];
+  visible.forEach((c, i) => cols[i % 3].push(c));
+  const g = document.getElementById('pillars');
+  g.style.gridTemplateColumns = visible.length <= 2 ? `repeat(${visible.length},1fr)` : 'repeat(3,1fr)';
+  g.innerHTML = cols.map(col => `<div class="pillar-col">${col.map(cardHtml).join('')}</div>`).join('');
+}
+
+function cardHtml(c) {
+  const meta = TYPE_META[c.type];
+  const chips = c.topics.slice(0, 5).map(t => `<span class="chip">${t}</span>`).join('');
+  const more  = c.topics.length > 5 ? `<span class="chip">+${c.topics.length - 5}</span>` : '';
+  const isActive = activeCard === c.id;
+  return `<div class="cat-card${isActive ? ' active' : ''}" id="card-${c.id}"
+    style="${isActive ? 'border-color:' + meta.color : ''}"
+    onclick="showDetail('${c.id}')">
+    <div class="cat-head" style="background:${meta.bg}">
+      <div class="cat-label" style="color:${meta.color}">${meta.label}</div>
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-meta">${c.links.length} resources · ${c.topics.length} topics</div>
+    </div>
+    <div class="cat-chips">${chips}${more}</div>
+  </div>`;
+}
+
+function showDetail(id) {
+  if (activeCard === id) { activeCard = null; renderGrid(); document.getElementById('detail-panel').classList.remove('visible'); return; }
+  activeCard = id;
+  renderGrid();
+  const c    = cats.find(x => x.id === id);
+  const meta = TYPE_META[c.type];
+  const itemsHtml = c.items.map(it =>
+    `<div class="concept-card"><div class="concept-name">${it.n}</div><div class="concept-note">${it.d}</div></div>`
+  ).join('');
+  const linksHtml = c.links.map(l =>
+    `<a class="link-card" href="${l.u}" target="_blank" rel="noopener">
+      <div class="link-icon ${l.t}">${{yt:'YT',web:'W',course:'C',tool:'T',book:'B'}[l.t]}</div>
+      <div class="link-text">
+        <div class="link-name">${l.n}</div>
+        <div class="link-type">${ICON_LABELS[l.t]} · ${l.d}</div>
+      </div>
+    </a>`
+  ).join('');
+  const panel = document.getElementById('detail-panel');
+  panel.innerHTML = `
+    <div class="det-header">
+      <div class="det-title">${c.name}</div>
+      <span class="det-badge" style="background:${meta.bg};color:${meta.color};border:1px solid ${meta.color}40">${meta.label}</span>
+    </div>
+    <div class="det-desc">${c.desc}</div>
+    <div class="sec-label">Key concepts</div>
+    <div class="concepts-grid">${itemsHtml}</div>
+    <div class="sec-label">Tutorials & resources (${c.links.length})</div>
+    <div class="links-grid">${linksHtml}</div>`;
+  panel.classList.add('visible');
+  setTimeout(() => panel.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+}
+
+buildFilters();
+renderGrid();
+</script>
+</body>
+</html>
